@@ -26,7 +26,7 @@
 
 ### 🔧 Installation
 
-1. Clone or [Download](https://github.com/JayantaMardi/job-notifier) this repository.
+1. Clone or [Download](https://github.com/jayantajm1/job-notifier) this repository.
 2. Go to `chrome://extensions/` in your browser.
 3. Enable **Developer Mode** (top right).
 4. Click **Load Unpacked** and select the cloned folder.
@@ -36,10 +36,20 @@
 
 ### 🛠 Technologies Used
 
-- HTML5, CSS3, JavaScript
-- Chrome Extension APIs (`storage`, `tabs`, `notifications`, `scripting`)
-- DOM parsing & content scripts
-- Local & sync storage handling
+- **JavaScript (ES6+)** – Core logic for scraping, filtering, and interaction  
+- **HTML5 + CSS3** – Lightweight, responsive popup and options UI  
+- **Chrome Extension APIs** –  
+  - `storage` (sync & local) – Save profile, keyword, resume  
+  - `runtime`, `tabs`, `scripting`, `notifications` – Message passing & interaction  
+- **Firebase** –  
+  - **Firestore Database** – Store user profiles and saved jobs  
+  - **Firebase Authentication** – Manage user login (if enabled)  
+  - **Firebase Storage** – Store and retrieve uploaded resumes  
+- **DOM Parsing & MutationObserver** – For dynamic job content scraping (e.g., LinkedIn)  
+- **Base64 + File API** – Resume upload and auto-fill support  
+- **Responsive Design** – Mobile-friendly popup using Flexbox  
+- **Modular File Structure** – Background scripts, content scripts, popup UI separation
+
 
 ---
 
