@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application Portfolio Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Portfolio</h1>
+        <div class="header-text">
+          <p>
+            Let's break down the types of users we want to target. Who are they?
+            What are they interested in?
+          </p>
+          <h4>Settings</h4>
+          <label>
+            <input type="checkbox" id="notifToggle" checked />
+            Enable Notifications
+          </label>
+        </div>
+      </header>
+
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <h3>Applications</h3>
+          <div class="number">18</div>
+        </div>
+        <div class="stat-card">
+          <h3>Interviews</h3>
+          <div class="number">5</div>
+        </div>
+        <div class="stat-card">
+          <h3>Offers</h3>
+          <div class="number">2</div>
+        </div>
+        <div class="stat-card">
+          <h3>Networking</h3>
+          <div class="number">12</div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-header">
+          <h2>Job Search Filter</h2>
+        </div>
+        <div class="filter-content">
+          <div class="filter-input">
+            <label for="keyword">Job Keyword:</label>
+            <input
+              type="text"
+              id="keyword"
+              placeholder="e.g. React Developer"
+            />
+            <button id="save" class="btn">Save Filter</button>
+            <span id="status" class="status-text"></span>
+          </div>
+          <div id="job-list" class="job-list-container">
+            <p>No jobs found yet.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-header">
+          <h2>My Profile</h2>
+          <button class="btn">Edit Profile</button>
+        </div>
+        <div class="profile-content">
+          <div class="profile-image">
+            <img src="/api/placeholder/120/120" alt="Jayanta Mardi" />
+          </div>
+          <div class="profile-info">
+            <h3>Jayanta Mardi</h3>
+            <p><span>Role:</span> <span>Web Developer</span></p>
+            <p><span>Location:</span> <span>Kolkata</span></p>
+            <p><span>Preference:</span> <span>Office Work</span></p>
+            <p><span>Experience:</span> <span>3 years</span></p>
+            <p>
+              <span>Top Skills:</span> <span>JavaScript, React, Node.js</span>
+            </p>
+          </div>
+          <div>
+            <div class="goals-container">
+              <h3>Goals</h3>
+              <div class="goals-grid">
+                <div class="goal-item">Senior Developer Role</div>
+                <div class="goal-item">Learn Cloud Architecture</div>
+                <div class="goal-item">50% Salary Increase</div>
+                <div class="goal-item">Work-Life Balance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-editor-section">
+        <div class="profile-header">
+          <h2>Edit Profile Information</h2>
+        </div>
+        <div class="profile-edit-content">
+          <div class="form-group">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Your full name" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="your.email@example.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" placeholder="Your phone number" />
+          </div>
+          <div class="form-group">
+            <label for="resume">Resume/CV:</label>
+            <input type="file" id="resume" accept=".pdf,.doc,.docx" />
+            <p class="file-warning">
+              Note: File uploads must be done manually on job sites
+            </p>
+          </div>
+          <div class="form-actions">
+            <button id="saveProfile" class="btn">Save Profile</button>
+            <span id="profileStatus" class="status-text"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="jobs-section">
+        <div class="jobs-header">
+          <div>Jobs Title</div>
+          <div>Description</div>
+          <div>Action</div>
+        </div>
+        <div class="jobs-content">
+          <div class="job-listing">
+            <div class="job-title">
+              <div class="job-title-item">Frontend Developer</div>
+              <div class="job-title-item">Tech Solutions Inc.</div>
+            </div>
+            <div class="job-description">
+              <div class="job-description-item">3-5 years React experience</div>
+              <div class="job-description-item">Remote position available</div>
+            </div>
+            <div class="job-action">
+              <div class="job-action-item">Applied on 12 Apr</div>
+              <div class="job-action-item">
+                <button class="btn">View Status</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-items-section">
+        <div class="action-header">
+          <h2>Let's end the session with action items.</h2>
+        </div>
+        <div class="action-grid">
+          <div class="action-grid-header">Action Item</div>
+          <div class="action-grid-header">Point Person</div>
+          <div class="action-grid-item">
+            Update portfolio with recent React projects
+          </div>
+          <div class="action-grid-item">Self</div>
+        </div>
+      </div>
+
+      <footer>
+        <p>Job Application Portfolio Dashboard ©Jayanta Mardi</p>
+        <div class="social-media">
+          <a
+            href="https://www.linkedin.com/in/mardijm/"
+            target="_blank"
+            title="LinkedIn"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg"
+              alt="LinkedIn"
+              class="social-icon"
+            />
+          </a>
+          <a
+            href="https://github.com/jayantajm1"
+            target="_blank"
+            title="GitHub"
+          >
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="GitHub"
+              class="social-icon"
+            />
+          </a>
+        </div>
+      </footer>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

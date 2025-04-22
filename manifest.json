@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Job Notifier",
+  "version": "1.1",
+  "description": "Real-time job alerts from multiple job portals.",
+  "author": "Jayanta Mardi",
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "style.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "options_page": "popup.html",
+  "permissions": ["storage", "notifications", "activeTab", "scripting"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.internshala.com/*",
+        "*://*.naukri.com/*",
+        "*://*.indeed.com/*",
+        "*://*.linkedin.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "*://*.internshala.com/*",
+    "*://*.naukri.com/*",
+    "*://*.indeed.com/*",
+    "*://*.linkedin.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icons/icon.png"
+  }
+}
