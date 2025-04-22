@@ -1,5 +1,8 @@
-(function scrapeJobs() {
+document.addEventListener("DOMContentLoaded", () => {
   const domain = window.location.hostname;
+  const SUPPORTED_DOMAINS = ["internshala", "naukri", "indeed", "linkedin"];
+  if (!SUPPORTED_DOMAINS.some((d) => domain.includes(d))) return;
+
   const jobs = [];
 
   // Scraping logic for different domains
@@ -32,7 +35,7 @@
     });
   }
 
-  // Filter jobs based on the keyword stored in chrome.storage
+  // Filter jobs by keyword
   chrome.storage.sync.get(["jobKeyword"], (res) => {
     const keyword = res.jobKeyword?.toLowerCase() || "";
     const filteredJobs = jobs.filter((job) =>
@@ -43,42 +46,42 @@
       chrome.runtime.sendMessage({ type: "JOBS_FOUND", jobs: filteredJobs });
     }
   });
-})();
+});
 
-// Auto-apply feature with confirmation
+// 🔁 Auto-apply form filler
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "AUTO_APPLY") {
     const confirmed = confirm("Do you want to auto-fill this job application?");
-    if (confirmed) {
-      chrome.storage.local.get(["userProfile"], ({ userProfile }) => {
-        if (!userProfile) {
-          alert("Please save your profile information first.");
-          return;
+    if (!confirmed) return;
+
+    chrome.storage.local.get(["userProfile"], ({ userProfile }) => {
+      if (!userProfile) {
+        alert("⚠️ Please save your profile information first.");
+        return;
+      }
+
+      try {
+        const nameInput = document.querySelector('input[name*="name" i]');
+        const emailInput = document.querySelector('input[name*="email" i]');
+        const phoneInput = document.querySelector('input[name*="phone" i]');
+        const submitBtn =
+          document.querySelector('button[type="submit"]') ||
+          document.querySelector('input[type="submit"]');
+
+        if (nameInput) nameInput.value = userProfile.name;
+        if (emailInput) emailInput.value = userProfile.email;
+        if (phoneInput) phoneInput.value = userProfile.phone;
+
+        if (submitBtn) {
+          submitBtn.click();
+          alert("✅ Application submitted successfully!");
+        } else {
+          alert("Form filled, but no submit button found.");
         }
-
-        try {
-          const nameInput = document.querySelector('input[name="name"]');
-          const emailInput = document.querySelector('input[name="email"]');
-          const phoneInput = document.querySelector('input[name="phone"]');
-          const submitBtn =
-            document.querySelector('button[type="submit"]') ||
-            document.querySelector('input[type="submit"]');
-
-          if (nameInput) nameInput.value = userProfile.name;
-          if (emailInput) emailInput.value = userProfile.email;
-          if (phoneInput) phoneInput.value = userProfile.phone;
-
-          if (submitBtn) {
-            submitBtn.click();
-            alert("Application submitted successfully!");
-          } else {
-            alert("Form filled but submit button not found.");
-          }
-        } catch (e) {
-          console.error("Auto-apply error:", e);
-          alert("Error auto-filling form. Please check console for details.");
-        }
-      });
-    }
+      } catch (e) {
+        console.error("Auto-apply error:", e);
+        alert("❌ Error auto-filling form. See console for details.");
+      }
+    });
   }
 });

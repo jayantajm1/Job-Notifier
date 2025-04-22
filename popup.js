@@ -11,27 +11,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const saveProfileBtn = document.getElementById("saveProfile");
   const profileStatus = document.getElementById("profileStatus");
 
-  // Load saved settings
+  // Load keyword filter and notification settings
   chrome.storage.sync.get(
     ["jobKeyword", "notificationEnabled"],
     function (result) {
-      if (result.jobKeyword) {
-        keywordInput.value = result.jobKeyword;
-      }
+      if (result.jobKeyword) keywordInput.value = result.jobKeyword;
       notifToggle.checked = result.notificationEnabled !== false;
     }
   );
 
-  // Load profile data
-  chrome.storage.local.get(["userProfile"], function (data) {
-    if (data.userProfile) {
-      nameInput.value = data.userProfile.name || "";
-      emailInput.value = data.userProfile.email || "";
-      phoneInput.value = data.userProfile.phone || "";
-    }
-  });
-
-  // Save keyword filter
+  // Save keyword
   saveButton.addEventListener("click", () => {
     const keyword = keywordInput.value.trim();
     if (!keyword) {
@@ -39,14 +28,12 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => (statusText.textContent = ""), 2000);
       return;
     }
-
-    chrome.storage.sync.set({ jobKeyword: keyword }, function () {
+    chrome.storage.sync.set({ jobKeyword: keyword }, () => {
       statusText.textContent = "✅ Filter saved!";
       setTimeout(() => (statusText.textContent = ""), 2000);
     });
   });
 
-  // Toggle notifications
   notifToggle.addEventListener("change", function () {
     chrome.runtime.sendMessage({
       type: "TOGGLE_NOTIFICATION",
@@ -54,8 +41,30 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Save profile
-  saveProfileBtn.addEventListener("click", () => {
+  // 🔐 Firebase Auth and Load Profile
+  firebase
+    .auth()
+    .signInAnonymously()
+    .then(() => {
+      firebase.auth().onAuthStateChanged(async (user) => {
+        if (user) {
+          const docRef = firebase
+            .firestore()
+            .collection("profiles")
+            .doc(user.uid);
+          const docSnap = await docRef.get();
+          if (docSnap.exists) {
+            const data = docSnap.data();
+            nameInput.value = data.name || "";
+            emailInput.value = data.email || "";
+            phoneInput.value = data.phone || "";
+          }
+        }
+      });
+    });
+
+  // 🔁 Save Profile with Resume Upload
+  saveProfileBtn.addEventListener("click", async () => {
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
     const phone = phoneInput.value.trim();
@@ -66,34 +75,36 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const userProfile = {
-      name,
-      email,
-      phone,
-    };
+    try {
+      const user = firebase.auth().currentUser;
+      let resumeURL = "";
 
-    // Handle resume file if selected
-    if (resumeInput.files.length > 0) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        userProfile.resume = e.target.result;
-        userProfile.resumeName = resumeInput.files[0].name;
-        saveProfile(userProfile);
-      };
-      reader.readAsDataURL(resumeInput.files[0]);
-    } else {
-      saveProfile(userProfile);
+      if (resumeInput.files.length > 0) {
+        const file = resumeInput.files[0];
+        const fileRef = firebase
+          .storage()
+          .ref(`${user.uid}/resume.${file.name.split(".").pop()}`);
+        await fileRef.put(file);
+        resumeURL = await fileRef.getDownloadURL();
+      }
+
+      await firebase.firestore().collection("profiles").doc(user.uid).set({
+        name,
+        email,
+        phone,
+        resumeURL,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+
+      profileStatus.textContent = "✅ Profile saved to Firebase!";
+      setTimeout(() => (profileStatus.textContent = ""), 2000);
+    } catch (err) {
+      console.error("Error saving profile:", err);
+      profileStatus.textContent = "❌ Failed to save profile!";
     }
   });
 
-  function saveProfile(profile) {
-    chrome.storage.local.set({ userProfile: profile }, () => {
-      profileStatus.textContent = "✅ Profile saved!";
-      setTimeout(() => (profileStatus.textContent = ""), 2000);
-    });
-  }
-
-  // Load stored jobs
+  // Load job list from background script
   chrome.runtime.sendMessage({ type: "GET_JOBS" }, (response) => {
     if (response?.jobs?.length) {
       jobListDiv.innerHTML = "<h4>Latest Jobs</h4>";
@@ -128,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Refresh jobs button
+  // Manual job refresh
   document.getElementById("refreshJobs").addEventListener("click", () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs.length > 0) {
