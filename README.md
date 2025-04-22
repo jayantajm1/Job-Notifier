@@ -19,7 +19,8 @@
 
 ### 📷 Demo Preview
 
-> *(Include a GIF or screenshot of the extension UI here)*
+> ![image](https://github.com/user-attachments/assets/d52316ee-329b-4744-8e10-9a42e13b8c53)
+
 
 ---
 
