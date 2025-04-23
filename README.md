@@ -26,7 +26,7 @@
 
 ### 🔧 Installation
 
-1. Clone or [Download](https://github.com/jayantajm1/Job-Notifier/archive/refs/heads/main.zip) this repository.
+1. [Clone](https://github.com/jayantajm1/Job-Notifier.git) or [Download](https://github.com/jayantajm1/Job-Notifier/archive/refs/heads/main.zip) this repository.
 2. Go to `chrome://extensions/` in your browser.
 3. Enable **Developer Mode** (top right).
 4. Click **Load Unpacked** and select the cloned folder.
