@@ -1,15 +1,34 @@
 {
   "name": "job-notifier",
   "version": "1.0.0",
-  "description": "**Job Notifier** is a powerful, lightweight Chrome Extension that helps users stay ahead in their job search by scraping real-time job listings from platforms like LinkedIn, Internshala, Naukri, and Indeed. It offers keyword filtering, job notifications, and even an auto-apply helper by storing your personal profile.",
+  "description": "A powerful Chrome Extension that revolutionizes your job search experience by scraping real-time job listings from LinkedIn, Internshala, Naukri, and Indeed. Features intelligent keyword filtering, instant notifications, and seamless profile management with Firebase integration.",
   "main": "background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "job-search",
+    "chrome-extension",
+    "job-scraper",
+    "linkedin",
+    "internshala",
+    "naukri",
+    "indeed",
+    "job-notifications",
+    "firebase",
+    "career"
+  ],
+  "author": "Jayanta Mardi",
   "license": "ISC",
   "dependencies": {
     "firebase": "^11.6.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jayantajm1/Job-Notifier.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jayantajm1/Job-Notifier/issues"
+  },
+  "homepage": "https://github.com/jayantajm1/Job-Notifier#readme"
 }
