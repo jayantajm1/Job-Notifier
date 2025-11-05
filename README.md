@@ -114,12 +114,12 @@ Job-Notifier/
 
 ### 🔮 Future Enhancements
 
-- ✅ Auto-apply to jobs using saved profile
-- 🔄 Background job scraping without visiting portals
-- 📊 Analytics dashboard for application tracking
-- 🤖 AI-powered job matching and recommendations
-- 📱 Mobile app companion
-- 🔗 Integration with more job portals
+- 🔜 Auto-apply to jobs using saved profile
+- 🔜 Background job scraping without visiting portals
+- 🔜 Analytics dashboard for application tracking
+- 🔜 AI-powered job matching and recommendations
+- 🔜 Mobile app companion
+- 🔜 Integration with more job portals
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "job-notifier",
   "version": "1.0.0",
-  "description": "A powerful Chrome Extension that revolutionizes your job search experience by scraping real-time job listings from LinkedIn, Internshala, Naukri, and Indeed. Features intelligent keyword filtering, instant notifications, and seamless profile management with Firebase integration.",
+  "description": "Chrome Extension for real-time job scraping from LinkedIn, Internshala, Naukri, and Indeed with keyword filtering, notifications, and Firebase-powered profile management.",
   "main": "background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
